@@ -60,3 +60,13 @@ Sample Response
 pip install -r requirements.txt
 python manage.py runserver
 ```
+
+## Some glimps of the site
+
+Home  
+![home1](https://user-images.githubusercontent.com/64153988/128633936-d0f75f36-87b0-417f-a87a-5a8fd4596ccf.png)
+Upload and Test
+![upload1](https://user-images.githubusercontent.com/64153988/128633942-28742d18-27ac-4cab-a4ce-38e29ef06baa.png)
+Result
+![result1](https://user-images.githubusercontent.com/64153988/128633952-53fb306b-50fa-4ded-8674-e175542f983b.png)
+
