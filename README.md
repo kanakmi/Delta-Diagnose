@@ -18,7 +18,8 @@ Then we did some image augmentation (Horizontal Flip) and obtained 502 total sam
 Leveraging the power of Transfer Learning, we used <b>VGG16 model</b> pre-trained on imagenet dataset as our basemodel with it's weights freezed. We then flattened the output from the basemodel and passed it to a Dense Layer consisting of 3 neurons (1 for each class). Finally, we saved the model with least Validation Loss for future predictions.
 
 ## ⚙️ How it works
-
+- User needs to upload a Chest MRI Image <i>(Need some images to test on? Download them from [here](https://drive.google.com/drive/folders/1e8YPenE6jlBYznLDAu989Pv_8BFvOwup?usp=sharing))</i>
+- We would process the image and return the result
 
 ## 🔨 Tech Stack
 <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white"/> <img alt="Django" src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white"/> <img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/> <img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/> <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/> <br> <img alt="Tensorflow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white"/> <img alt="Keras" src="https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white"/> <img alt="OpenCV" src="https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white"/>
@@ -27,10 +28,11 @@ Leveraging the power of Transfer Learning, we used <b>VGG16 model</b> pre-traine
 We first attempted to build the model from scratch but failed terribly (due to lack of training data) reaching an accuracy of just about 39%. The accuracy was increased to roughly 59 percent when we utilized the ResNet50 model, but it was still below par, and the stored model size was around 300 MB, which could have caused problems when deploying the model on Heroku. Finally, we settled on the VGG16 model, which had an initial accuracy of 84 percent (later improved to 97 percent) while still keeping the size in check.
 
 ## 🏅 Accomplishments that we're proud of
-When we started, we never thought we would be able to achieve an accuracy of 97%. We are really proud of that.
+When we started, we never thought we would be able to achieve an accuracy of 97%. We are really proud of that. <br>
+Secondly our aim was to deploy this project so that anyone in the world can really use it and we are extremly happy for reaching our goal.
 
 ## 📖 What we learned
-
+We learned how to make an API and also how to deploy the ML part seperately and the UI seperately to enhance performance of the website.
 
 ## 🚀 What's next for Delta Diagnose
 We tested the model on
