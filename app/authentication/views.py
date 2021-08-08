@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from twilio.rest import Client
 from .models import AuthorizedDevice, TwoFAToken, TWOFAVerified
-from helpers import random_str
+from helper import random_str
 import os
 
 
