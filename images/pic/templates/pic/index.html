@@ -12,10 +12,12 @@
     <h2>
         Delta Dignose
     </h2>
+    {% if type %}
+    <h1>Type: {{ type }}</h1>
+    <br>
 
-    {% for pictures in pictures %}
-    <img src="{{ pictures.image.url }}" />
-    {% endfor %}
+    <img src="{{ image }}">
+    {% endif %}
 
 </body>
 
