@@ -9,16 +9,80 @@
 </head>
 
 <body>
-    <h2>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .heading {
+            display: grid;
+            place-items: center;
+            font-size: 5rem;
+        }
+
+        .btn {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 200px;
+            height: 40px;
+            font-size: 20px;
+            font-family: "Source Serif Pro", serif;
+            padding-top: 10px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 25px;
+            letter-spacing: 1.2px;
+            color: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+            background-size: 600%;
+            -webkit-animation: anime 16s linear infinite;
+            animation: anime 16s linear infinite;
+        }
+
+        @keyframes anime {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .body__center {
+            display: grid;
+            place-items: center;
+        }
+
+        .img__result {
+            height: 250px;
+            width: 200px;
+        }
+    </style>
+    <h2 class="heading">
         Delta Dignose
     </h2>
-    {% if type %}
-    <h1>Type: {{ type }}</h1>
-    <br>
 
-    <img src="{{ image }}">
-    {% endif %}
+    <div class="body__center">
 
+        <a href="upload/" style="text-decoration: none;" target="blank">
+            <div class="btn">Upload & test
+            </div>
+        </a>
+
+        {% if type %}
+        <h1>Type: {{ type }}</h1>
+        <br>
+
+        <img src="{{ image }}" class="img__result">
+        {% endif %}
+    </div>
 </body>
 
 </html>
