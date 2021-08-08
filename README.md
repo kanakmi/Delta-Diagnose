@@ -35,7 +35,7 @@ Secondly our aim was to deploy this project so that anyone in the world can real
 We learned how to make an API and also how to deploy the ML part seperately and the UI seperately to enhance performance of the website.
 
 ## 🚀 What's next for Delta Diagnose
-We tested the model on
+We tested the model on only 66 images and those are not enough to get the real picture. We would love to test it on more images and improve the model accordingly.
 
 ## Installing and running
 
