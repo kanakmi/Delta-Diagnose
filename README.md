@@ -27,16 +27,33 @@ Leveraging the power of Transfer Learning, we used <b>VGG16 model</b> pre-traine
 We first attempted to build the model from scratch but failed terribly (due to lack of training data) reaching an accuracy of just about 39%. The accuracy was increased to roughly 59 percent when we utilized the ResNet50 model, but it was still below par, and the stored model size was around 300 MB, which could have caused problems when deploying the model on Heroku. Finally, we settled on the VGG16 model, which had an initial accuracy of 84 percent (later improved to 97 percent) while still keeping the size in check.
 
 ## 🏅 Accomplishments that we're proud of
-
+When we started, we never thought we would be able to achieve an accuracy of 97%. We are really proud of that.
 
 ## 📖 What we learned
 
 
 ## 🚀 What's next for Delta Diagnose
-
+We tested the model on
 
 ## Installing and running
 
+### Model API
+Send a POST request on URL http://covidclassifier.herokuapp.com/classify_image with JSON file containing URL of image to classify as a Parameter<br>
+Sample JSON File
+```
+{
+  "url" : "https://i.ibb.co/FBSztPS/0120.jpg"
+}
+```
+Sample Response
+```
+{
+  "class":"viral",
+  "class_probability":55.93
+}
+```
+
+### GUI Version
 ```
 pip install -r requirements.txt
 python manage.py runserver
