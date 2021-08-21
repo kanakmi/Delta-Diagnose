@@ -1,4 +1,5 @@
-## Delta Diagnose
+## Delta Diagnose 2.0
+Every hackathon, we enjoy developing new projects, but many previously built terrific projects with the potential to become something great in the future are abandoned in the early stages of development in the process. So we decided to spend this weekend working on a new version of Delta Diagnose with lots of new features and a revamped UI.
 
 ## 💡 Inspiration
 The Delta variant of COVID-19 arrived in India in March 2021. It led to the deaths of 270,000 individuals in three months, more than twice the number we saw in the entire year of 2020. <br> The Delta strain has a higher affinity for lung tissues than other strains, making it more lethal. <br>
@@ -6,7 +7,18 @@ The same mutation has now been discovered in other parts of the world. We wanted
 Viral Pneumonia, a condition with identical symptoms, has made identifying COVID patients even more challenging.
 
 ## 💻 What it does
-Delta Diagnose aims to classify Chest MRI Images as COVID-19, Viral Pneumonia, and Normal.  It can not only assist doctors but can also be directly used by the patients to self-diagnose (although we suggest confirming the results with doctors).
+Delta Diagnose aims to analyze Chest MRI Images and classify them as COVID-19, Viral Pneumonia, and Normal. It can not only assist doctors but can also be directly used by the patients to self-diagnose (although we suggest confirming the results with doctors).
+
+## 🆕 Updates
+
+### 1. Model Changes
+- Added 1704 new images to the training data <b>(678% increase in training data)</b>
+- Added 119 new images to the test data <b>(180% increase in test data)</b>
+- Compared to the last time, <b>constructed the model from scratch</b> (was using Transfer Learning previously)
+- Increased the accuracy from 97% to 99%
+- Significantly reduced the saved model size from 169 MB to 28.7 MB <b>(83% reduction in Size)</b>
+
+### 2. Model API Changes
 
 ## 👷‍♂️ How we Built it
 Data related to the healthcare industry is not openly accessible. We were fortunate enough to find a relevant dataset on Kaggle [(Link)](https://www.kaggle.com/pranavraikokte/covid19-image-dataset). <br>
