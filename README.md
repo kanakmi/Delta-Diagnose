@@ -1,5 +1,5 @@
 ## Delta Diagnose 2.0
-Every hackathon, we enjoy developing new projects, but many previously built terrific projects with the potential to become something great in the future are abandoned in the early stages of development in the process. So we decided to spend this weekend working on a new version of Delta Diagnose with lots of new features and a revamped UI.
+Every hackathon, we enjoy developing new projects, but many previously built terrific projects with the potential to become something great in the future are abandoned in the early stages of development in the process. So we decided to spend this weekend working on a new version of Delta Diagnose with lots of new features and a revamped UI. You can know more about the previous version from [here](https://devpost.com/software/delta-diagnose).
 
 ## 💡 Inspiration
 The Delta variant of COVID-19 arrived in India in March 2021. It led to the deaths of 270,000 individuals in three months, more than twice the number we saw in the entire year of 2020. <br> The Delta strain has a higher affinity for lung tissues than other strains, making it more lethal. <br>
@@ -27,8 +27,13 @@ Delta Diagnose aims to analyze Chest MRI Images and classify them as COVID-19, V
 - To know more about API, [click here](https://github.com/kanakmi/Delta-Diagnose/tree/Version-2.0/API) or visit http://delta-diagnose-api.herokuapp.com/docs
 
 ### 3. UI changes
+- Revamped the complete UI
+- Added Login and Signup Page
+- Integrated Twillio for OTP verification
+- Elevated the User Experience
 
 ## ⚙️ How it works
+- User needs to Login/Signup
 - User needs to upload a Chest MRI Image <i>(Need some images to test on? Download them from [here](https://drive.google.com/drive/folders/1e8YPenE6jlBYznLDAu989Pv_8BFvOwup?usp=sharing))</i>
 - We would process the image and return the result
 
@@ -36,17 +41,20 @@ Delta Diagnose aims to analyze Chest MRI Images and classify them as COVID-19, V
 <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white"/> <img alt="Django" src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white"/> <img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/> <img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/> <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/> <br> <img alt="Tensorflow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white"/> <img alt="Keras" src="https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white"/> <img alt="OpenCV" src="https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white"/> ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 
 ## 🧠 Challenges we ran into
-We first attempted to build the model from scratch but failed terribly (due to lack of training data) reaching an accuracy of just about 39%. The accuracy was increased to roughly 59 percent when we utilized the ResNet50 model, but it was still below par, and the stored model size was around 300 MB, which could have caused problems when deploying the model on Heroku. Finally, we settled on the VGG16 model, which had an initial accuracy of 84 percent (later improved to 97 percent) while still keeping the size in check. Another challange was to integrate Twilio OTP while login. We tried to use twilio but the request was not apporved for the phone number so we were not able to integrate in our project.
+- The biggest challenge was to manage the size of the API. If the size increases by 300 MB, Heroku takes a lot of time to boot up the virtual machine which was not an ideal scenario. In the previous version, the size was 493 MB which was reduced to 318 MB after retraining the model and switching to FastAPI. At this moment we were drained of energy and couldn't think of more ways to reduce that extra 18 MB. Then the last thing we decided to try was to find a version of big libraries such as Tensorflow and OpenCV which is as small in size as possible and as recent as possible. Finally we were able to pack it up in a size of 283 MB with all the required libraries and everything.
+- Another thing that we tried was Quantization Aware Training but doing that reduced the accuracy of our model to 65% so it was not really something we could put into production.
 
 ## 🏅 Accomplishments that we're proud of
-When we started, we never thought we would be able to achieve an accuracy of 97%. We are really proud of that. <br>
-Secondly our aim was to deploy this project so that anyone in the world can really use it and we are extremly happy for reaching our goal.
+This is actually the first time we have achieved an accuracy of 99% on model that we trained from scratch which is really a stat we would love to boast about.
 
 ## 📖 What we learned
-We learned how to make an API and also how to deploy the ML part seperately and the UI seperately to enhance performance of the website.
+- We learned how to use FastAPI and thanks to awesome documentation, that process was seamless.
+- We learned how to reduce slug size of your project to increase performance.
+- We learned about Quantization Aware training to reduce the size of the model and make it accessible for small devices.
+- We also leared how to use Twillio for OTP Authentication
 
 ## 🚀 What's next for Delta Diagnose
-We tested the model on only 66 images and those are not enough to get the real picture. We would love to test it on more images and improve the model accordingly.
+All the stats we are boasting about are limited to the small amount of data we have. We would love to see how it performs on the real world data by taking this project to a specialized doctor.
 
 ## Installing and running
 
@@ -67,17 +75,8 @@ Sample Response
 ```
 
 ### GUI Version
+Jump over to the UI folder and run
 ```
 pip install -r requirements.txt
 python manage.py runserver
 ```
-
-## Some glimps of the site
-
-Home  
-![home1](https://user-images.githubusercontent.com/64153988/128633936-d0f75f36-87b0-417f-a87a-5a8fd4596ccf.png)
-Upload and Test
-![upload1](https://user-images.githubusercontent.com/64153988/128633942-28742d18-27ac-4cab-a4ce-38e29ef06baa.png)
-Result
-![result1](https://user-images.githubusercontent.com/64153988/128633952-53fb306b-50fa-4ded-8674-e175542f983b.png)
-
