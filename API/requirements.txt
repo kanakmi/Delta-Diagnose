@@ -1,5 +1,5 @@
-Flask==2.0.1
-opencv-python-headless==4.5.2.54
-gunicorn==20.0.4
-tensorflow-cpu==2.3.0
-numpy==1.18.5
+fastapi==0.68.0
+uvicorn==0.15.0
+opencv-python-headless==4.2.0.34
+tensorflow-cpu==2.3.4
+numpy==1.21.2
