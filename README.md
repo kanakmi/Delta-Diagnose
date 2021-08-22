@@ -17,24 +17,23 @@ Delta Diagnose aims to analyze Chest MRI Images and classify them as COVID-19, V
 - Compared to the last time, <b>constructed the model from scratch</b> (was using Transfer Learning previously)
 - Increased the accuracy from 97% to 99%
 - Significantly reduced the saved model size from 169 MB to 28.7 MB <b>(83% reduction in Size)</b>
+- To know about training procedure and model architecture, [click here](https://github.com/kanakmi/Delta-Diagnose/tree/Version-2.0/Model%20Training)
 
-### 2. Model API Changes
+### 2. API Changes
+- <b>Fixed a Bug:</b> When deployed on Heroku, the system automatically shuts down after 30 minutes of inactivity. When restarted, the app should be up and running within 60 seconds or Heroku would simply serve the request. Due to large model size, the system would not fully load and would result in an error for the first request sent after restarting the system.
+- Since we reduced the model size in previous step, this bug was automatically resolved
+- Used <b>FastAPI</b> instead of <b>Flask</b> 
+- Significantly reduced the request serving time from 5 seconds earlier to 1.54 seconds now <b> (69.2% reduction in serving time) </b>
+- To know more about API, [click here](https://github.com/kanakmi/Delta-Diagnose/tree/Version-2.0/API) or visit http://delta-diagnose-api.herokuapp.com/docs
 
-## 👷‍♂️ How we Built it
-Data related to the healthcare industry is not openly accessible. We were fortunate enough to find a relevant dataset on Kaggle [(Link)](https://www.kaggle.com/pranavraikokte/covid19-image-dataset). <br>
-The Dataset consists of 251 Chest MRI Train images (111 - COVID, 70 - Viral Pneumonia, 70 - Normal) and 66 Test Images (26 - COVID, 20 - Viral Pneumonia, 20 - Normal).
-<p align = 'center'>
-  <img alt="Sample" height=40% src="https://i.ibb.co/Hrp0YyL/Screenshot-2021-08-08-105409.png" width="40%"/>
-</p>
-Then we did some image augmentation (Horizontal Flip) and obtained 502 total samples out of which 15% (76 samples) formed the Validation Set and rest (426 samples) formed the training set.<br>
-Leveraging the power of Transfer Learning, we used <b>VGG16 model</b> pre-trained on imagenet dataset as our basemodel with it's weights freezed. We then flattened the output from the basemodel and passed it to a Dense Layer consisting of 3 neurons (1 for each class). Finally, we saved the model with least Validation Loss for future predictions.
+### 3. UI changes
 
 ## ⚙️ How it works
 - User needs to upload a Chest MRI Image <i>(Need some images to test on? Download them from [here](https://drive.google.com/drive/folders/1e8YPenE6jlBYznLDAu989Pv_8BFvOwup?usp=sharing))</i>
 - We would process the image and return the result
 
 ## 🔨 Tech Stack
-<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white"/> <img alt="Django" src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white"/> <img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/> <img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/> <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/> <br> <img alt="Tensorflow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white"/> <img alt="Keras" src="https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white"/> <img alt="OpenCV" src="https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white"/>
+<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white"/> <img alt="Django" src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white"/> <img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/> <img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/> <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/> <img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/> <br> <img alt="Tensorflow" src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white"/> <img alt="Keras" src="https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white"/> <img alt="OpenCV" src="https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white"/> ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 
 ## 🧠 Challenges we ran into
 We first attempted to build the model from scratch but failed terribly (due to lack of training data) reaching an accuracy of just about 39%. The accuracy was increased to roughly 59 percent when we utilized the ResNet50 model, but it was still below par, and the stored model size was around 300 MB, which could have caused problems when deploying the model on Heroku. Finally, we settled on the VGG16 model, which had an initial accuracy of 84 percent (later improved to 97 percent) while still keeping the size in check. Another challange was to integrate Twilio OTP while login. We tried to use twilio but the request was not apporved for the phone number so we were not able to integrate in our project.
@@ -52,7 +51,7 @@ We tested the model on only 66 images and those are not enough to get the real p
 ## Installing and running
 
 ### Model API
-Send a POST request on URL http://covidclassifier.herokuapp.com/classify_image with JSON file containing URL of image to classify as a Parameter<br>
+Send a POST request on URL http://delta-diagnose-api.herokuapp.com/ with JSON file containing URL of image to classify as a Parameter<br>
 Sample JSON File
 ```
 {
@@ -62,8 +61,8 @@ Sample JSON File
 Sample Response
 ```
 {
-  "class":"viral",
-  "class_probability":55.93
+  "class":"viral_pneumonia",
+  "class_probability":99.93
 }
 ```
 
