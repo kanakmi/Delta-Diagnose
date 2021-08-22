@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Verification</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(198, 203, 226, 0.247);
+            height: 50vh;
+            width: 50%;
+            border-radius: 15px;
+        }
+        .inpt{
+            width: 30%;
+            padding-left: 20%;
+            font-family: monospace;
+            font-size: 20px;
+        }
+        .btn{
+            margin-top: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        <input type="text" name="otp" id="otp" placeholder="OTP" class="inpt">
+        <br>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</body>
+</html>

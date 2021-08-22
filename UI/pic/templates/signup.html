@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        .helptext{
+            display: none;
+        }
+        /*.formdata{
+            height: 100vh;
+            width: 30%;
+            margin: auto;
+            margin-top: 15%;
+        }*/
+        ul>li{
+            font-size: 10px;
+        }
+        .formdata>p{
+            margin-top: 20px;
+        }
+        nav{
+            position: absolute;
+            top: 8px;
+            display: flex;
+            align-items: center;
+            width: 80%;
+            justify-content: space-between;
+        }
+        .logo{
+            height: 150px;
+        }
+        .errorlist>li{
+            color: red;
+            font-size: 16px !important;
+        }
+        .header{
+            font-family: monospace;
+            font-size: 25px;
+            color: rgb(128, 38, 38);
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .formzz{
+            margin-top: 30vh;
+            width: 80%;
+
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="/static/logo.png" alt="" srcset="" class="logo">
+        <h1 class="header">Your Medical Cloud! That keep track of your Health</h1>
+    </nav>
+
+    <form class="row g-3 formzz" method="POST" action="">
+        {% csrf_token %}
+        <div class="formdata">
+            {{ form.as_p }}
+            <input type="button" class="btn btn-primary" value="Next" onclick="nextpage()">
+            <p>Already have a account? <a href="/auth/login">Login</a> </p>
+        </div>   
+        <div class="section2">
+            <div class="col-md-4">
+            <label for="validationDefault01" class="form-label">First name</label>
+            <input type="text" class="form-control" id="validationDefault01" name="fname" required>
+            </div>
+            <div class="col-md-4">
+            <label for="validationDefault02" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="validationDefault02" name="lname" required>
+            </div>
+            <div class="col-md-4">
+            <label for="validationDefaultUsername" class="form-label">Email</label>
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                <input type="text" class="form-control" id="validationDefaultUsername" name="email"  aria-describedby="inputGroupPrepend2" required>
+            </div>
+            </div>
+            <br>
+            <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                <label class="form-check-label" for="invalidCheck2">
+                Agree to terms and conditions
+                </label>
+            </div>
+            </div>
+            <br>
+            <div class="col-12">
+                <input type="button" value="Back" class="btn btn-primary" onclick="prevpage()">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </div>
+      </form>
+
+    <script>
+        $('.section2').hide();
+        function nextpage(){
+            $('.section2').show();
+            $('.formdata').hide();
+        }
+        function prevpage(){
+            $('.section2').hide();
+            $('.formdata').show();
+        }
+    </script>
+</body>
+</html>

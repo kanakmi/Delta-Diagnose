@@ -13,16 +13,49 @@
         * {
             padding: 0px;
             margin: 0px;
+            background-color: #F2EADF;
         }
 
         .heading {
+            margin-top: 15px;
             display: grid;
             place-items: center;
-            font-size: 5rem;
+            font-size: 3rem;
+        }
+
+        .line {
+            margin-top: 10px;
+            height: 4px;
+            width: 255px;
+            background-color: #1e20bb;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .hero__img {
+            width: 50%;
+        }
+
+        .hero__text {
+            display: flex;
+            flex-direction: column;
+            font-size: 28px;
+            margin-top: -250px;
+            margin-left: 60%;
+        }
+
+        .hero__details {
+            width: 80%;
+            font-size: 20px;
         }
 
         .btn {
-            margin-top: 20px;
+            margin-top: 80%;
             margin-bottom: 20px;
             width: 200px;
             height: 40px;
@@ -60,6 +93,10 @@
             place-items: center;
         }
 
+        .uploade__title {
+            font-size: 25px;
+        }
+
         .img__result {
             height: 250px;
             width: 200px;
@@ -67,9 +104,23 @@
     </style>
     <h2 class="heading">
         Delta Dignose
+        <div class="line"></div>
     </h2>
 
+    <div class="hero">
+        <img src="https://images.theconversation.com/files/324911/original/file-20200402-74858-18yusny.jpg?ixlib=rb-1.1.0&rect=0%2C323%2C3000%2C1500&q=45&auto=format&w=1356&h=668&fit=crop"
+            class="hero__img">
+        <div class="hero__text">
+            <h1 class="hero__title">Delta Diagnose</h1>
+            <h5 class="hero__details">Delta Diagnose aims to classify Chest MRI Images as COVID-19, Viral Pneumonia, and
+                Normal. It can not only assist doctors but can also be directly used by the patients to self-diagnose.
+            </h5>
+        </div>
+    </div>
+
     <div class="body__center">
+
+        <div class="uploade__title">Uploade & Test chest X-Ray for Results</div>
 
         <a href="upload/" style="text-decoration: none;" target="blank">
             <div class="btn">Upload & test
@@ -91,7 +142,9 @@
         {{ prob }}
         <br>
         <img src="{{ image }}" class="img__result">
+        <a href="/">Test with another image</a>
         {% endif %}
     </div>
 </body>
+
 </html>

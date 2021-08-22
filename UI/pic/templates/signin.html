@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .form{
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(189, 191, 212, 0.411);
+        }
+        .login{
+            height: 50vh;
+            width: 50%;
+            background-color: rgba(245, 245, 245, 0.507);
+            box-shadow: 1px 1px 20px rgba(68, 68, 114, 0.521);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+        .login>p{
+            margin-top: 20px;
+
+        }
+        .login>p>input{
+            height: 20px;
+            border: 1px solid rgba(86, 86, 155, 0.616);
+        }
+        .headin{
+            color: rgb(50, 53, 65);
+            margin-top: -30px;
+        }
+        nav{
+            position: absolute;
+            top: 0;
+            display: flex;
+            align-items: center;
+            width: 80%;
+            justify-content: space-between;
+        }
+        .logo{
+            height: 150px;
+        }
+        .header{
+            font-family: monospace;
+            font-size: 25px;
+            color: rgb(128, 38, 38);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="/static/logo.png" alt="" srcset="" class="logo">
+        <h1 class="header">Your Medical Cloud! That keep track of your Health</h1>
+    </nav>
+    <form action = "" method = "post" class="form">
+        {% csrf_token %}
+        <div class="login">
+            <h1 class="headin">Welcome Back</h1>
+            {{ form.as_p }}
+            <input type="submit" value="Submit" style="margin-top: 10px;">
+            <p class="hyper">New With us? <a href="/auth/signup">Signup</a></p>
+        </div>
+    </form>
+</body>
+</html>
