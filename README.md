@@ -62,9 +62,15 @@ All the stats we are boasting about are limited to the small amount of data we h
 
 ### Model API
 Send a POST request on URL http://delta-diagnose-api.herokuapp.com/ with JSON file containing URL of image to classify as a Parameter<br>
+
 <p align="center">
-  <img src="https://i.ibb.co/thRhD9Z/ezgif-com-gif-maker.gif" alt="ezgif-com-gif-maker" border="0">
+  
+
+https://user-images.githubusercontent.com/54859521/131256477-3bf2f2f4-9512-4e3f-b922-611e2aa0474b.mp4
+
+
 </p>
+
 Sample JSON File
 ```
 {
