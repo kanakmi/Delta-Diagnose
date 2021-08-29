@@ -1,3 +1,5 @@
+## Watch this project in action [https://youtu.be/-d0X2QeCPTQ](https://youtu.be/-d0X2QeCPTQ)
+
 ## Delta Diagnose 2.0
 Every hackathon, we enjoy developing new projects, but many previously built terrific projects with the potential to become something great in the future are abandoned in the early stages of development in the process. So we decided to spend this weekend working on a new version of Delta Diagnose with lots of new features and a revamped UI. You can know more about the previous version from [here](https://devpost.com/software/delta-diagnose).
 
@@ -60,6 +62,9 @@ All the stats we are boasting about are limited to the small amount of data we h
 
 ### Model API
 Send a POST request on URL http://delta-diagnose-api.herokuapp.com/ with JSON file containing URL of image to classify as a Parameter<br>
+<p align="center">
+  <img src="https://i.ibb.co/thRhD9Z/ezgif-com-gif-maker.gif" alt="ezgif-com-gif-maker" border="0">
+</p>
 Sample JSON File
 ```
 {
