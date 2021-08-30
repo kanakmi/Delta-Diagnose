@@ -55,7 +55,7 @@
         }
 
         .btn {
-            margin-top: 80%;
+            margin-top: 20%;
             margin-bottom: 20px;
             width: 200px;
             height: 40px;
@@ -91,6 +91,7 @@
         .body__center {
             display: grid;
             place-items: center;
+            
         }
 
         .uploade__title {
@@ -122,28 +123,10 @@
 
         <div class="uploade__title">Uploade & Test chest X-Ray for Results</div>
 
-        <a href="upload/" style="text-decoration: none;" target="blank">
-            <div class="btn">Upload & test
+        <a href="/auth/login" style="text-decoration: none;" target="blank">
+            <div class="btn">Get Started
             </div>
         </a>
-
-        {% if type %}
-        <h1>Type: {{ type }}</h1>
-        {% if type == '"covid"' %}
-        <h2>Rush to Hospital</h2>
-        {% endif %}
-        {% if type == '"viral"' %}
-        <h2>You have Viral</h2>
-        {% endif %}
-        {% if type == '"normal"' %}
-        <h2>No need to worry</h2>
-        {% endif %}
-        <br>
-        {{ prob }}
-        <br>
-        <img src="{{ image }}" class="img__result">
-        <a href="/">Test with another image</a>
-        {% endif %}
     </div>
 </body>
 

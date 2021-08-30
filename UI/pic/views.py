@@ -14,7 +14,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 def index(request):
-    #return redirect('/Get-file')
+    #return redirect('/auth/login')
     pictures = Picture.objects.all()
     ctx= {'pictures': pictures}
     print(request.user)
@@ -67,7 +67,13 @@ def getimg(request):
             img.accuracy = d
             img.image_url = url
             img.save()
-            return redirect('results')
+            #return redirect('results')
+            context = {
+                'a' : c,
+                'b' : d,
+                'url': url
+            }
+            return render(request,'current_result.html',context=context)
     return render(request,'index.html')
 
 
@@ -81,3 +87,4 @@ def results(request):
         'data':datas
     }
     return render(request,'results.html',context=context)
+

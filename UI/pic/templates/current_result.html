@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(115, 76, 151, 0.712);
+        }
+
+        .navs {
+            float: right;
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+
+        .lnk {
+            color: black;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .lnk:hover {
+            border-bottom: 1px solid blue;
+            color: blanchedalmond;
+        }
+
+        .logo {
+            position: absolute;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 28px;
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .card{
+            height: 60vh;
+            width: 50%;
+            background: linear-gradient(to top right, rgba(255, 255, 125, 0.8), rgba(255, 125, 255, 0.9));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .image{
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="logo">Delta Diagnose</a>
+        <ul class="navs">
+            <a href="/Get-file" class="lnk">Test another</a>
+            <a href="/auth/signout" class="lnk">Logout</a>
+        </ul>
+    </nav>
+    <div class="card">
+        <h1>Symptom- {{ a }}</h1>
+        <br>
+        <h2>Accuracy- {{ b }}</h2>
+        <br>
+        <img src="{{ url }}" alt="X-ray Image" class="image">
+        <a href="/results" style="margin-top: 30px;">
+            <button>Previous Results</button>
+        </a>
+    </div>
+</body>
+
+</html>

@@ -1,18 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Report Predictions</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+        }
+
+        .card {
+            height: 180px;
+            width: 40%;
+            background-color: rgb(143, 204, 212);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+            border-radius: 10px;
+            opacity: 0.8;
+        }
+
+        .value {
+            font-size: 15px;
+            color: rgb(31, 28, 28);
+        }
+
+        .overlay {
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.493);
+            z-index: 3;
+
+        }
+
+        .close {
+            height: 20px;
+            width: 20px;
+            background-color: yellow;
+            border-radius: 50%;
+            float: right;
+            margin: 60px 80px 0 0;
+        }
+
+        .close:hover {
+            box-shadow: 0 0 30px yellow;
+        }
+        .image{
+            margin-top: 30px;
+            margin-left: 30%;
+            height: 90%;
+        }
+        nav{
+            position: relative;
+            top: 0;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(115, 76, 151, 0.712);
+        }
+        .navs{
+            float: right;
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+        .lnk{
+            color: black;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .lnk:hover{
+            border-bottom: 1px solid blue;
+            color: blanchedalmond;
+        }
+        .logo{
+            position: absolute;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 28px;
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 <body>
+    <nav>
+        <a href="/" class="logo">Delta Diagnose</a>
+        <ul class="navs">
+            <a href="/Get-file" class="lnk">Test another</a>
+            <a href="/auth/signout" class="lnk">Logout</a>
+        </ul>
+    </nav>
     {% for i in data %}
-    {{ i.symptom }}
-    {{ i.accuracy }}
-    {{ i.date }}
-    <img src="{{ i.image_url }}" alt="" height="100px">
-    <br>
+    <div class="card">
+        <p class="value">Symptom- <strong>{{ i.symptom }}</strong></p>
+        <p class="value">Accuracy- <strong>{{ i.accuracy }}</strong></p>
+        <p class="value">Result date- <strong>{{ i.date }}</strong></p>
+        <button id="show_report" onclick="show_report('{{ i.id }}')">View X-Ray</button>
+    </div>
+    <div class="overlay" id="overlay{{ i.id }}">
+        <div class="close" onclick="close('{{ i.id }}')"></div>
+        <img src="{{ i.image_url }}" alt="" class="image">
+    </div>
     {% endfor %}
+    <script>
+        $('.overlay').hide()
+        function show_report(id) {
+            $('.overlay').hide()
+            $('#overlay' + id).show()
+            console.log(id)
+        }
+        $(".close").click(function () {
+            $('.overlay').hide()
+        });
+
+    </script>
 </body>
+
 </html>
