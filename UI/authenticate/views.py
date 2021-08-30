@@ -10,7 +10,7 @@ from userdata.models import sendotp,profile
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('/Get-file')
     if request.method=='POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -40,7 +40,7 @@ def signup(request):
 
 def signin(request):
     if request.user.is_authenticated:
-        return render(request,'homepage.html')
+        return redirect('/Get-file')
     if request.method =='POST':
         username = request.POST['username']
         password1 = request.POST['password']

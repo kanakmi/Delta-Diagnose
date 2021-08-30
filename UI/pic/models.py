@@ -11,3 +11,4 @@ class model_image(models.Model):
     symptom = models.CharField(max_length=20,null=True)
     accuracy = models.CharField(max_length=20,null=True)
     date = models.DateField(auto_now_add=True,null=True)
+    image_url = models.CharField(max_length=50,blank = True,null=True)

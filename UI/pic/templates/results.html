@@ -8,7 +8,11 @@
 </head>
 <body>
     {% for i in data %}
-    <img src="/media/{{ user.username }}/{{ i.image }}" alt="" height="100px">
+    {{ i.symptom }}
+    {{ i.accuracy }}
+    {{ i.date }}
+    <img src="{{ i.image_url }}" alt="" height="100px">
+    <br>
     {% endfor %}
 </body>
 </html>

@@ -8,8 +8,13 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from .models import model_image
 from authenticate.views import check
+from .new import geturl
+
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 def index(request):
+    #return redirect('/Get-file')
     pictures = Picture.objects.all()
     ctx= {'pictures': pictures}
     print(request.user)
@@ -50,7 +55,8 @@ def getimg(request):
             fs = FileSystemStorage(location='UI/media/'+str(request.user))
             filename = fs.save(myfile.name, myfile)
             usr = request.user
-            res = classify('https://deltadignose.pythonanywhere.com/media/AdityaM/Chest_Qfxg5Em.webp')
+            url = geturl(str(BASE_DIR)+'/UI/media/'+str(request.user)+'/'+filename)
+            res = classify(url)
             c=res['class']
             d = res['class_probablity']
             print(c,d)
@@ -59,8 +65,9 @@ def getimg(request):
             img.image = filename
             img.symptom = c
             img.accuracy = d
+            img.image_url = url
             img.save()
-            #return redirect('results')
+            return redirect('results')
     return render(request,'index.html')
 
 
