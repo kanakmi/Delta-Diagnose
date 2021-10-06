@@ -1,4 +1,14 @@
-## Watch this project in action [https://youtu.be/-d0X2QeCPTQ](https://youtu.be/-d0X2QeCPTQ)
+## Delta Diagnose 2.1
+
+## 🆕 Updates
+- Used <b>Quantization Aware Training</b> to reduce the Trained Model size from 30.1 MB to 2.41 MB <b>(92% reduction in Size)</b>
+- Further reduced the request serving time from 1.54 seconds earlier to less than 1 second now <b> (50% reduction in serving time) </b>
+- Added a new way to interact with the API
+
+
+https://user-images.githubusercontent.com/54859521/136175830-5cbb4bb1-3c20-4d79-bc6b-c52b15ce9a11.mp4
+
+
 
 ## Delta Diagnose 2.0
 Every hackathon, we enjoy developing new projects, but many previously built terrific projects with the potential to become something great in the future are abandoned in the early stages of development in the process. So we decided to spend this weekend working on a new version of Delta Diagnose with lots of new features and a revamped UI. You can know more about the previous version from [here](https://devpost.com/software/delta-diagnose).
@@ -18,7 +28,7 @@ Delta Diagnose aims to analyze Chest MRI Images and classify them as COVID-19, V
 - Added 119 new images to the test data <b>(180% increase in test data)</b>
 - Compared to the last time, <b>constructed the model from scratch</b> (was using Transfer Learning previously)
 - Increased the accuracy from 97% to 99%
-- Significantly reduced the saved model size from 169 MB to 28.7 MB <b>(83% reduction in Size)</b>
+- Significantly reduced the saved model size from 169 MB to 30.1 MB <b>(83% reduction in Size)</b>
 - To know about training procedure and model architecture, [click here](https://github.com/kanakmi/Delta-Diagnose/tree/Version-2.0/Model%20Training)
 
 ### 2. API Changes
