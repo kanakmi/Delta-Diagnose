@@ -7,9 +7,7 @@ Added a new UI built using Streamlit.
 
 ![Streamlit UI](https://user-images.githubusercontent.com/54859521/144738306-9c9c3fab-9d1f-45f3-9794-cb0a3738a7c2.png)
 
-To run this file, go to Streamlit UI, fire up your terminal and type ```streamlit run '.\Delta Diagnose.py'``` <br>
-*Streamlit 1.1 (or above) required* <br>
-*To install, type ```pip install streamlit``` in your terminal*
+To run this file, go to Streamlit UI folder, install the requirements, fire up your terminal and type ```streamlit run '.\Delta Diagnose.py'```
 
 ## Delta Diagnose 2.1
 
