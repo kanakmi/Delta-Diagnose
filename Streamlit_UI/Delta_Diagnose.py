@@ -11,7 +11,7 @@ labels = {0: "COVID-19", 1: "Viral Pneumonia", 2: "Normal"}
 def input_covid_classifier():
     # function to read the model from disk
     global covid_interpreter
-    covid_interpreter = tf.lite.Interpreter(model_path=os.path.join(os.getcwd(), 'covid_classifier.tflite'))
+    covid_interpreter = tf.lite.Interpreter(model_path=os.path.join(os.getcwd(), 'Streamlit_UI/covid_classifier.tflite'))
     covid_interpreter.allocate_tensors()
 
 def predict(image):
