@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image
 import numpy as np
+import os
 
 # global variable that will be used to store the interpreter
 covid_interpreter = None
@@ -10,7 +11,7 @@ labels = {0: "COVID-19", 1: "Viral Pneumonia", 2: "Normal"}
 def input_covid_classifier():
     # function to read the model from disk
     global covid_interpreter
-    covid_interpreter = tf.lite.Interpreter(model_path='covid_classifier.tflite')
+    covid_interpreter = tf.lite.Interpreter(model_path=os.path.join(os.getcwd(), 'covid_classifier.tflite'))
     covid_interpreter.allocate_tensors()
 
 def predict(image):
@@ -42,10 +43,12 @@ def predict(image):
 if __name__ == '__main__':
     st.sidebar.header("Delta Diagnose")
     st.sidebar.markdown("Delta Diagnose uses a Convolutional Neural Network to detect COVID-19 and Viral Pneumonia in Chest X-Ray Images with an accuracy of 99%.")
-    st.sidebar.image('sidebar.gif', use_column_width=True)
+    st.sidebar.image('https://github.com/kanakmi/Delta-Diagnose/blob/Version-2.2/Streamlit_UI/sidebar.gif?raw=true', use_column_width=True)
     st.sidebar.subheader("Upload an image to get a diagnosis")
     st.sidebar.markdown("[Project Repository](https://github.com/kanakmi/Delta-Diagnose)")
-    st.image('Header.gif', use_column_width=True)
+    st.sidebar.markdown("Need some images to test on?")
+    st.sidebar.markdown("Download them from [here](https://drive.google.com/drive/folders/1e8YPenE6jlBYznLDAu989Pv_8BFvOwup?usp=sharing)")
+    st.image('https://github.com/kanakmi/Delta-Diagnose/blob/Version-2.2/Streamlit_UI/Header.gif?raw=true', use_column_width=True)
     file_uploaded = st.file_uploader("Choose the Image File", type=['jpg', 'jpeg', 'png'])
     
     if file_uploaded is not None:
