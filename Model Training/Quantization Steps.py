@@ -44,7 +44,7 @@ def get_data(path):
     for folder in os.scandir(path):
         for entry in os.scandir(path + folder.name):
 
-            X.append(read_and_preprocess(train_path + folder.name + '/' + entry.name))
+            X.append(read_and_preprocess(path + folder.name + '/' + entry.name))
         
             if folder.name[0]=='C':
                 y.append(0) # Covid
