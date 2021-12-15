@@ -4,165 +4,206 @@ import numpy as np
 import os
 import cv2
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
 import tensorflow as tf
 from tensorflow.keras import layers, optimizers
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
-# function that would read an image provided the image path, preprocess and return it back
+# Global Variables for later use
 
+IMG_SIZE = 256
+X_train = [] # To store train images
+y_train = [] # To store train labels
+
+train_path = './dataset/train/' # path containing training images
+test_path = './dataset/test/' # path containing training images
+
+model = None
+
+# function that would read an image provided the image path, preprocess and return it back
+'''
+labels -
+0 - Covid
+1 - Viral Pneumonia
+2 - Normal
+'''
 def read_and_preprocess(img_path):
     img = cv2.imread(img_path, cv2.IMREAD_COLOR) # reading the image
-    img = cv2.resize(img, (256, 256)) # resizing it (I just like it to be powers of 2)
+    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE)) # resizing it (I just like it to be powers of 2)
     img = np.array(img, dtype='float32') # convert its datatype so that it could be normalized
     img = img/255 # normalization (now every pixel is in the range of 0 and 1)
     return img
 
-X_train = [] # To store train images
-y_train = [] # To store train labels
+# read the data from the disk provided the data path
+def get_data(path):
+    X = []
+    y = []
+    for folder in os.scandir(path):
+        for entry in os.scandir(path + folder.name):
 
-# labels -
-# 0 - Covid
-# 1 - Viral Pneumonia
-# 2 - Normal
-
-train_path = './dataset/train/' # path containing training image samples
-
-for folder in os.scandir(train_path):
-    for entry in os.scandir(train_path + folder.name):
-
-        X_train.append(read_and_preprocess(train_path + folder.name + '/' + entry.name))
+            X.append(read_and_preprocess(train_path + folder.name + '/' + entry.name))
         
-        if folder.name[0]=='C':
-            y_train.append(0) # Covid
-        elif folder.name[0]=='V':
-            y_train.append(1) # Viral Pneumonia
-        else:
-            y_train.append(2) # Normal
+            if folder.name[0]=='C':
+                y.append(0) # Covid
+            elif folder.name[0]=='V':
+                y.append(1) # Viral Pneumonia
+            else:
+                y.append(2) # Normal
 
-X_train = np.array(X_train)
-y_train = np.array(y_train)
-# We have 1955 training samples in total
+    X = np.array(X)
+    y = np.array(y)
+    
+    return X, y
 
 # Image Augmentation
+def image_augmentation():
+    global X_train, y_train
+    X_aug = []
+    y_aug = []
 
-X_aug = []
-y_aug = []
+    for i in range(0, len(y_train)):
+        X_new = np.fliplr(X_train[i])
+        X_aug.append(X_new)
+        y_aug.append(y_train[i])
 
-for i in range(0, len(y_train)):
-    X_new = np.fliplr(X_train[i])
-    X_aug.append(X_new)
-    y_aug.append(y_train[i])
+    X_aug = np.array(X_aug)
+    y_aug = np.array(y_aug)
 
-X_aug = np.array(X_aug)
-y_aug = np.array(y_aug)
+    X_train = np.append(X_train, X_aug, axis=0) # appending augmented images to original training samples
+    y_train = np.append(y_train, y_aug, axis=0) # appending augmented labels to original training labels
 
-X_train = np.append(X_train, X_aug, axis=0) # appending augmented images to original training samples
-
-# We have splitted our data in a way that - 
-# 1. The samples are shuffled
-# 2. The ratio of each class is maintained (stratify)
-# 3. We get same samples every time we split our data (random state)
-X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.15, shuffle=True, stratify=y_train, random_state=123)
-
-# we will use 3323 images for training the model
-# we will use 587 images for validating the model's performance
+def split_data(test_size=0.2, random_state=109):
+    global X_train, y_train
+    '''
+    We have splitted our data in a way that - 
+    1. The samples are shuffled
+    2. The ratio of each class is maintained (stratify)
+    3. We get same samples every time we split our data (random state)
+    '''
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=test_size, shuffle=True, stratify=y_train, random_state=random_state)
+    return X_train, X_val, y_train, y_val
 
 # Designing and Training the Model
+def create_model():
+    model = tf.keras.Sequential([
+        Conv2D(filters=32, kernel_size=(2,2), activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 3)),
+        MaxPooling2D((4,4)),
+        
+        Conv2D(filters=64, kernel_size=(3,3), activation='relu', padding='same'),
+        MaxPooling2D((3,3)),
+        Dropout(0.3), # for regularization
+        
+        Conv2D(filters=64, kernel_size=(4,4), activation='relu', padding='same'),
+        Conv2D(filters=128, kernel_size=(5,5), activation='relu', padding='same'),
+        MaxPooling2D((2,2)),
+        Dropout(0.4),
+        
+        Conv2D(filters=128, kernel_size=(5,5), activation='relu', padding='same'),
+        MaxPooling2D((2,2)),
+        Dropout(0.5),
+        
+        Flatten(), # flattening for feeding into ANN
+        Dense(512, activation='relu'),
+        Dropout(0.5),
+        Dense(256, activation='relu'),
+        Dropout(0.3),
+        Dense(128, activation='relu'),
+        Dense(3, activation='softmax')
+    ])
+    return model
 
-model = tf.keras.Sequential([
-    Conv2D(filters=32, kernel_size=(2,2), activation='relu', input_shape=(256, 256, 3)),
-    MaxPooling2D((4,4)),
-    
-    Conv2D(filters=64, kernel_size=(3,3), activation='relu', padding='same'),
-    MaxPooling2D((3,3)),
-    Dropout(0.3), # for regularization
-    
-    Conv2D(filters=64, kernel_size=(4,4), activation='relu', padding='same'),
-    Conv2D(filters=128, kernel_size=(5,5), activation='relu', padding='same'),
-    MaxPooling2D((2,2)),
-    Dropout(0.4),
-    
-    Conv2D(filters=128, kernel_size=(5,5), activation='relu', padding='same'),
-    MaxPooling2D((2,2)),
-    Dropout(0.5),
-    
-    Flatten(), # flattening for feeding into ANN
-    Dense(512, activation='relu'),
-    Dropout(0.5),
-    Dense(256, activation='relu'),
-    Dropout(0.3),
-    Dense(128, activation='relu'),
-    Dense(3, activation='softmax')
-])
+# training the model
+def train_model():
+    global X_train, y_train, model
 
-# Slowing down the learning rate
-opt = optimizers.Adam(learning_rate=0.0001)
+    # splitting the training data into training and validation
+    X_train, X_val, y_train, y_val = split_data(test_size=0.15, random_state=123)
+    # we will use 3323 images for training the model
+    # we will use 587 images for validating the model's performance
 
-# compile the model
-model.compile(loss = 'sparse_categorical_crossentropy', optimizer=opt, metrics= ["accuracy"])
+    # Slowing down the learning rate
+    opt = optimizers.Adam(learning_rate=0.0001)
 
-# use early stopping to exit training if validation loss is not decreasing even after certain epochs (patience)
-earlystopping = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=20)
+    # compile the model
+    model.compile(loss = 'sparse_categorical_crossentropy', optimizer=opt, metrics= ["accuracy"])
 
-# save the best model with least validation loss
-checkpointer = ModelCheckpoint(filepath="covid_classifier_weights.h5", verbose=1, save_best_only=True)
+    # use early stopping to exit training if validation loss is not decreasing even after certain epochs (patience)
+    earlystopping = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=20)
 
-history = model.fit(X_train, y_train, epochs = 100, validation_data=(X_val, y_val), batch_size=32, shuffle=True, callbacks=[earlystopping, checkpointer])
+    # save the best model with least validation loss
+    checkpointer = ModelCheckpoint(filepath="covid_classifier_weights.h5", verbose=1, save_best_only=True)
+
+    history = model.fit(X_train, y_train, epochs = 100, validation_data=(X_val, y_val), batch_size=32, shuffle=True, callbacks=[earlystopping, checkpointer])
 
 # save the model architecture to json file for future use
-
-model_json = model.to_json()
-with open("covid_classifier_model.json","w") as json_file:
-    json_file.write(model_json)
+def save_model():
+    global model
+    model_json = model.to_json()
+    with open("covid_classifier_model.json","w") as json_file:
+        json_file.write(model_json)
 
 # Load pretrained model (best saved one)
-with open('covid_classifier_model.json', 'r') as json_file:
-    json_savedModel= json_file.read()
-# load the model  
-model = tf.keras.models.model_from_json(json_savedModel)
-model.load_weights('covid_classifier_weights.h5')
-model.compile(loss = 'sparse_categorical_crossentropy', optimizer=opt, metrics= ["accuracy"])
+def load_model():
+    with open('covid_classifier_model.json', 'r') as json_file:
+        json_savedModel= json_file.read()
+    # load the model  
+    model = tf.keras.models.model_from_json(json_savedModel)
+    model.load_weights('covid_classifier_weights.h5')
+    opt = optimizers.Adam(learning_rate=0.0001)
+    model.compile(loss = 'sparse_categorical_crossentropy', optimizer=opt, metrics= ["accuracy"])
 
-X_test = [] # To store test images
-y_test = [] # To store test labels
+# Evaluating the Trained Model
+def evaluate_model():
+    # Load pretrained model (best saved one)
+    model = load_model()
 
-test_path = './dataset/test/'
+    # reading the test data
+    X_test, y_test = get_data(test_path)
+    # We have 185 images for testing
 
-for folder in os.scandir(test_path):
-    for entry in os.scandir(test_path + folder.name):
+    # making predictions
+    predictions = model.predict(X_test)
 
-        X_test.append(read_and_preprocess(test_path + folder.name + '/' + entry.name))
-        
-        if folder.name[0]=='C':
-            y_test.append(0)
-        elif folder.name[0]=='V':
-            y_test.append(1)
-        else:
-            y_test.append(2)
-            
-X_test = np.array(X_test)
-y_test = np.array(y_test)
-# We have 185 images for testing
+    # Obtain the predicted class from the model prediction
+    predict = []
 
-# making predictions
-predictions = model.predict(X_test)
+    for i in predictions:
+        predict.append(np.argmax(i))
 
-# Obtain the predicted class from the model prediction
-predict = []
+    predict = np.asarray(predict)
 
-for i in predictions:
-  predict.append(np.argmax(i))
+    # Obtain the accuracy of the model
+    accuracy = accuracy_score(y_test, predict)
+    print(accuracy)
 
-predict = np.asarray(predict)
+    # Obtaining the complete classification report of our model
+    report = classification_report(y_test, predict)
+    print(report)
 
-# Obtain the accuracy of the model
-from sklearn.metrics import accuracy_score
-accuracy = accuracy_score(y_test, predict)
-print(accuracy)
+def main():
+    global X_train, y_train, model
 
-# Obtaining the complete classification report of our model
-from sklearn.metrics import classification_report
-report = classification_report(y_test, predict)
-print(report)
+    # reading the training data
+    X_train, y_train = get_data(train_path)
+    # We have 1955 training samples in total
+
+    # applying image augmentation on training data
+    image_augmentation()
+    
+    # designing the model architecture
+    model = create_model()
+
+    # training the model
+    train_model()
+
+    # saving the model
+    save_model()
+
+    # evaluating the saved model's performance
+    evaluate_model()
+
+if __name__ == "__main__":
+    main()

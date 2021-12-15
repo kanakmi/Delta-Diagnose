@@ -24,9 +24,8 @@ def predict(image):
 
     image = image.convert("RGB")
     image = image.resize((256, 256))
-    image = np.array(image)
+    img = np.array(image, dtype='Float32')
 
-    img = image.astype('Float32')
     img = img/255
     img = img.reshape((1, 256, 256, 3))
     covid_interpreter.set_tensor(input_details[0]['index'], img)
@@ -43,12 +42,12 @@ def predict(image):
 if __name__ == '__main__':
     st.sidebar.header("Delta Diagnose")
     st.sidebar.markdown("Delta Diagnose uses a Convolutional Neural Network to detect COVID-19 and Viral Pneumonia in Chest X-Ray Images with an accuracy of 99%.")
-    st.sidebar.image('https://github.com/kanakmi/Delta-Diagnose/blob/Version-2.2/Streamlit_UI/sidebar.gif?raw=true', use_column_width=True)
+    st.sidebar.image('Streamlit_UI/sidebar.gif', use_column_width=True)
     st.sidebar.subheader("Upload an image to get a diagnosis")
-    st.sidebar.markdown("[Project Repository](https://github.com/kanakmi/Delta-Diagnose)")
+    st.sidebar.write('Made with ❤️ by Kanak Mittal')
     st.sidebar.markdown("Need some images to test on?")
     st.sidebar.markdown("Download them from [here](https://drive.google.com/drive/folders/1e8YPenE6jlBYznLDAu989Pv_8BFvOwup?usp=sharing)")
-    st.image('https://github.com/kanakmi/Delta-Diagnose/blob/Version-2.2/Streamlit_UI/Header.gif?raw=true', use_column_width=True)
+    st.image('Streamlit_UI/Header.gif', use_column_width=True)
     file_uploaded = st.file_uploader("Choose the Image File", type=['jpg', 'jpeg', 'png'])
     
     if file_uploaded is not None:
@@ -61,4 +60,3 @@ if __name__ == '__main__':
         col1.header("Classification Result")
         col1.write("The image is classified as "+result['class'])
         col1.write("The class probability is "+str(result['class_probablity'])+"%")
-        

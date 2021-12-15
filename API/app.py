@@ -44,8 +44,10 @@ output_shape = output_details[0]['shape']
 
 labels = {0: "covid", 1: "viral_pneumonia", 2: "normal"}
 
-def classify_image(arr):
-    img = arr.astype('Float32')
+def classify_image(img):
+    img = img.convert("RGB")
+    img = img.resize((256, 256))
+    img = np.array(img, dtype='Float32')
     img = img/255
     img = img.reshape((1, 256, 256, 3))
     interpreter.set_tensor(input_details[0]['index'], img)
@@ -56,8 +58,6 @@ def classify_image(arr):
         'class': labels[pred],
         'class_probablity': np.round(predictions[0][pred]*100,2)
     }
-    print(predictions)
-    print(result)
     return result
 
 class img_url(BaseModel):
@@ -74,17 +74,26 @@ class img_url(BaseModel):
 async def ping():
     return "Hello, I am alive"
 
-def read_file_as_image(data) -> np.ndarray:
-    image = Image.open(BytesIO(data))
-    image = image.convert("RGB")
-    image = image.resize((256, 256))
-    return np.array(image)
-
-@app.post("/predict_image")
+@app.post(
+    "/predict_image", 
+    responses={
+        200: {
+            "description": "Successful Response",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "class": "covid",
+                        "class_probablity": 97.42
+                    }
+                }
+            }
+        }
+    }
+)
 async def predict(
     file: UploadFile = File(...)
 ):
-    image = read_file_as_image(await file.read())
+    image = Image.open(BytesIO(await file.read()))
     response = classify_image(image)
     return response
 
@@ -107,8 +116,5 @@ async def predict(
 async def classify_url(item: img_url):
     req = urllib.request.urlretrieve(item.url, "saved")
     image = Image.open("saved")
-    image = image.convert("RGB")
-    image = image.resize((256, 256))
-    image = np.array(image)
     response = classify_image(image)
     return response
