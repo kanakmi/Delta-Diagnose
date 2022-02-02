@@ -24,7 +24,7 @@ def predict(image):
 
     image = image.convert("RGB")
     image = image.resize((256, 256))
-    img = np.array(image, dtype='Float32')
+    img = np.array(image, dtype='float32')
 
     img = img/255
     img = img.reshape((1, 256, 256, 3))
